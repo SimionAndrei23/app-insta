@@ -81,21 +81,6 @@ function Post( {id, nameUser, userImg, img, caption,timestampPost}) {
 
     useEffect(() => {
 
-        if(sendModal)
-        {
-            document.body.style.overflowY = 'hidden'
-            document.body.style.height = '100vh'
-        }
-
-        else
-        {
-            document.body.style.overflow = 'auto'
-        }
-
-    },[sendModal])
-
-    useEffect(() => {
-
         onSnapshot(query(collection(db, 'posts', id, 'savedPosts'), where('postID', '==', id)), (snapshot) => {
             setPosts(snapshot.docs);
         })
