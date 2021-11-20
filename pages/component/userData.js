@@ -3,12 +3,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component"
 import Header from "../../components/Header"
 import { UserIcon, CheckIcon, ChevronDownIcon, DotsHorizontalIcon, BadgeCheckIcon } from '@heroicons/react/solid';
 import NumberFormat from 'react-number-format'
-import { useContext } from "react";
-import { Context } from "../../Context";
 
 const userData = () => {
-
-    const { user } = useContext(Context)
 
     const router = useRouter()
 

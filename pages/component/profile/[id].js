@@ -1,11 +1,10 @@
 
-import { collection, onSnapshot, query, where } from '@firebase/firestore'
+import { collection, onSnapshot,query, where } from '@firebase/firestore'
 import React, {useContext, useEffect, useState} from 'react'
 import Header from '../../../components/Header'
 import PostsProfile from '../../../components/PostsProfile'
 import ProfileStats from '../../../components/ProfileStats'
 import { db } from '../../../firebase'
-import Fade from 'react-reveal/Fade';
 import { Context } from '../../../Context'
 
 

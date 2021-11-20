@@ -52,7 +52,7 @@ const Comment = ( {id,idPost, image, username, comment}) => {
     return (
         <div className = 'flex items-center space-x-2 mb-3 px-4 cursor-pointer overflow-x-hidden' key = {id}>
             <img className = 'h-8 w-8 rounded-full' src = {image} alt = '' />
-            <p className = 'flex-1'> <span className = 'font-bold'> {username}</span> {" "} {comment} </p>
+            <div className = 'flex-1'> <span className = 'font-bold'> {username}</span> {" "} {comment} </div>
             {
                 hasLikedComment ? (
                     <HeartIconFilled onClick = {sendHeart} className = 'w-4 h-4' />

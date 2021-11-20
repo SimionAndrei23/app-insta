@@ -4,7 +4,7 @@ import { Context } from '../Context';
 
 const ModalHorizontal = () => {
 
-    const {modalHorizontal,setModalHorizontal } = useContext(Context)
+    const {setModalHorizontal } = useContext(Context)
 
     const setStateHorizontal = (e) => {
 
@@ -14,21 +14,6 @@ const ModalHorizontal = () => {
         }
 
     }
-
-    /*useEffect(() => {
-
-        if(modalHorizontal)
-        {
-            document.body.style.overflowY = 'hidden'
-        }
-
-        else
-        {
-            document.body.style.overflow = 'auto'
-        }
-
-    },[modalHorizontal])
-    */
 
     return (
         <div className = 'fixed  inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 transition-all transform duration-1000 ease-out' onClick = {setStateHorizontal}>

@@ -11,13 +11,9 @@ import { CameraIcon } from "@heroicons/react/outline"
 const ModalPost = ( {loadingConfetti,setLoadingConfetti}) => {
 
     const { user,modalOne, setModalOne, userFacebook } = useContext(Context)
-
     const [inputPost, setInputPost] = useState('')
-
     const filePickerRef = useRef(null);
-
     const [loadingPost, setLoadingPost] = useState(false)
-
     const [selectedFile, setSelectedFile] = useState(null)
 
 
@@ -73,7 +69,7 @@ const ModalPost = ( {loadingConfetti,setLoadingConfetti}) => {
 
             const imageRef = ref(storage, `images/${docRef.id}/image`)
 
-            await uploadString(imageRef, selectedFile, 'data_url').then( async (snapshot) => {
+            await uploadString(imageRef, selectedFile, 'data_url').then(async (snapshot) => {
 
                 const downloadURL = await getDownloadURL(imageRef)
 

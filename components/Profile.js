@@ -1,5 +1,5 @@
 
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { useContext } from 'react';
@@ -8,6 +8,8 @@ import { Context } from '../Context';
 function Profile() {
 
     const { user, userFacebook, signOutUser } = useContext(Context)
+
+    const router = useRouter()
 
     return (
         <div className = 'flex items-center justify-between mt-16 ml-10 '>

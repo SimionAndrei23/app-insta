@@ -12,8 +12,6 @@ const savedPosts = () => {
 
     const [posts, setPosts] = useState([])
 
-    const [isShown, setIsShown] = useState(false)
-
 
     useEffect(() => {
 

@@ -33,7 +33,6 @@ function Suggestions() {
                        <h2 className = 'font-semibold text-sm'> {profile.username} </h2>
                        <h3 className = 'text-gray-400 text-xs'> Followed by {profile.name} + 7 more </h3>
                    </div>
-
                    <button type = 'button' className = 'text-blue-400 text-sm transform transition duration-700 hover:translate-x-4 hover:text-blue-600'> Follow </button>
                </div> 
             ))}

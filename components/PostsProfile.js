@@ -1,4 +1,4 @@
-import { collection, onSnapshot, query, where } from "@firebase/firestore"
+
 import { ChatIcon, HeartIcon } from "@heroicons/react/outline"
 import { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component"

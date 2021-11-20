@@ -1,12 +1,12 @@
 import React, {useContext,useEffect,useState, useRef} from 'react'
-import {SearchIcon,BookmarkIcon, PlusCircleIcon, CogIcon, SwitchHorizontalIcon, XIcon, UserCircleIcon, UseGroupIcon, HeartIcon, PaperAirplaneIcon, MenuIcon, UserGroupIcon, ChevronRightIcon, RefreshIcon, HomeIcon, VideoCameraIcon, CameraIcon} from '@heroicons/react/outline'
+import {SearchIcon,BookmarkIcon, PlusCircleIcon, CogIcon, SwitchHorizontalIcon, XIcon, UserCircleIcon, HeartIcon, MenuIcon, ChevronRightIcon, RefreshIcon,VideoCameraIcon} from '@heroicons/react/outline'
 import {HeartIcon as HeartIconSolid} from '@heroicons/react/solid'
 import {VideoCameraIcon as VideoCameraIconSolid} from '@heroicons/react/solid'
 import { data } from './dataHeader'
 import faker from 'faker'
 import { useRouter } from 'next/router'
 import Fade from 'react-reveal/Fade'
-import { db, storage,auth } from '../firebase'
+import { db } from '../firebase'
 import { collection, onSnapshot, query} from '@firebase/firestore'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Reels from './Reels'
@@ -17,14 +17,21 @@ const Header = ({dataValue,icon, name }) => {
     const { user, signOutUser, modalOne, setModalOne, userFacebook } = useContext(Context)
 
     const refUserImage = useRef()
-
     const refHeart = useRef()
-
     const refMenuModal = useRef()
-
     const router = useRouter()
-
     const [reelsData, setReelsData] = useState([])
+    const [reelsModal, setReelsModal] = useState(false)
+    const [menuModal, setMenuModal] = useState(false)
+    const [modalHeart, setModalHeart] = useState(false)
+    const [loadingHeart, setLoadingHeart] = useState(false)
+    const [inputSuggestions, setInputSuggestions] = useState([]);
+    const [headerContainer, setHeaderContainer] = useState(false);
+    const [inputRef, setInputRef] = useState('');
+    const [inputFocus, setInputFocus] = useState(false);
+    const [loadingInput, setLoadingInput] = useState(false);
+    const [activeTab, setActiveTab] = useState(icon);
+    const [borderUser, setBorderUser] = useState(false);
 
 
     useEffect(() => {
@@ -32,27 +39,7 @@ const Header = ({dataValue,icon, name }) => {
             setReelsData(snapshot.docs);
         })
     },[db])
-
-    const [reelsModal, setReelsModal] = useState(false)
-
-    /*useEffect(() => {
-        if(reelsModal) {
-            document.body.style.overflow = 'hidden'
-        }
-        else
-        {
-            document.body.style.overflow = 'auto'
-        }
-    }, [reelsModal])*/
     
-    const [menuModal, setMenuModal] = useState(false)
-
-    const [modalHeart, setModalHeart] = useState(false)
-
-    console.log(modalHeart)
-
-    const [loadingHeart, setLoadingHeart] = useState(false)
-
     useEffect(() => {
         setLoadingHeart(true)
         setTimeout(() => {
@@ -60,15 +47,6 @@ const Header = ({dataValue,icon, name }) => {
         }, 1000)
     }, [modalHeart])
 
-    const [inputSuggestions, setInputSuggestions] = useState([]);
-
-    const [headerContainer, setHeaderContainer] = useState(false);
-
-    const [inputRef, setInputRef] = useState('');
-
-    const [inputFocus, setInputFocus] = useState(false);
-
-    const [loadingInput, setLoadingInput] = useState(false);
 
     useEffect(() => {
         setLoadingInput(true)
@@ -76,10 +54,6 @@ const Header = ({dataValue,icon, name }) => {
             setLoadingInput(false)
         }, 1000)
     }, [inputRef,inputFocus])
-
-    const [activeTab, setActiveTab] = useState(icon);
-
-    const [borderUser, setBorderUser] = useState(false);
 
     useEffect(() => {
         const suggestions = [...Array(20)].map((_, i) => ({
@@ -110,12 +84,6 @@ const Header = ({dataValue,icon, name }) => {
     const deleteHandler = (user) => {
 
         setInputSuggestions(inputSuggestions.filter((element) => element.id !== user.id))
-
-    }
-
-    const closeModal = (e) => {
-
-        console.log(e.target);
 
     }
 
@@ -175,7 +143,7 @@ const Header = ({dataValue,icon, name }) => {
     return (
         <div className = 'sticky w-full inset-0 h-18 z-40 shadow-xl border-b py-1 headerColor'>
             <div className = 'belowHeader absolute -bottom-3 left-0 w-full h-4 '></div>
-           <div className = 'flex items-center justify-between max-w-6xl px-5 md:mx-auto'>
+            <div className = 'flex items-center justify-between max-w-6xl px-5 md:mx-auto'>
 
                 {/* Left */}
 
@@ -242,8 +210,8 @@ const Header = ({dataValue,icon, name }) => {
 
                 <div className = 'relative flex items-center space-x-6'>
 
-                        <div className = {`${modalHeart ? 'absolute top-14 -left-60 md:-left-40 w-80 h-80 md:w-96 md:h-96 bg-white rounded-md shadow-lg' : 'hidden'}`}>
-                            <div className = 'hidden md:inline-flex absolute -top-2 right-[4.5rem] w-4 h-4 rotate-45 bg-white'></div>
+                    <div className = {`${modalHeart ? 'absolute top-14 -left-60 md:-left-40 w-80 h-80 md:w-96 md:h-96 bg-white rounded-md shadow-lg' : 'hidden'}`}>
+                        <div className = 'hidden md:inline-flex absolute -top-2 right-[4.5rem] w-4 h-4 rotate-45 bg-white'></div>
                             {
                                 loadingHeart ? (
                                     <div className = 'flex items-center justify-center w-full h-full'>
@@ -251,19 +219,17 @@ const Header = ({dataValue,icon, name }) => {
                                     </div>
                                 ) : (
                                     <div className = 'relative flex items-center gap-4 px-6 py-4 cursor-pointer transition duration-700 ease-out hover:bg-gray-100'>
-                                <div className = 'z-50 w-8 h-8 rounded-full bg-red-500 overflow-hidden'>
-                                
-                                </div>
-                                <div className = 'absolute top-3 left-3 w-8 h-8 bg-blue-500 rounded-full overflow-hidden'> </div>
-                                <div className = 'flex flex-col justify-center flex-1'>
-                                    <span className = 'font-semibold text-sm'> Follow Requests </span>
-                                    <span className = 'text-black text-opacity-40 text-sm'> razvanpopescu + 2 more </span>
-                                </div>
-                                <div className = 'flex items-center gap-4'>
-                                    <span className = 'w-2 h-2 bg-blue-500 rounded-full'></span>
-                                    <ChevronRightIcon className = 'text-black text-opacity-40 w-4 h-4'/>
-                                </div>
-                            </div>
+                                        <div className = 'z-50 w-8 h-8 rounded-full bg-red-500 overflow-hidden'></div>
+                                        <div className = 'absolute top-3 left-3 w-8 h-8 bg-blue-500 rounded-full overflow-hidden'> </div>
+                                        <div className = 'flex flex-col justify-center flex-1'>
+                                            <span className = 'font-semibold text-sm'> Follow Requests </span>
+                                            <span className = 'text-black text-opacity-40 text-sm'> razvanpopescu + 2 more </span>
+                                        </div>
+                                        <div className = 'flex items-center gap-4'>
+                                            <span className = 'w-2 h-2 bg-blue-500 rounded-full'></span>
+                                            <ChevronRightIcon className = 'text-black text-opacity-40 w-4 h-4'/>
+                                        </div>
+                                    </div>
                                 )
                             }
                         </div>
@@ -288,7 +254,7 @@ const Header = ({dataValue,icon, name }) => {
                         <PlusCircleIcon onClick = { () => setModalOne(!modalOne)}  className = 'navButton' />
                     </div>
 
-                    { menuModal ? (
+                    {menuModal ? (
                         <div ref = {refMenuModal}>
                             <XIcon onClick = { () => setMenuModal(!menuModal)} className = 'h-7 inline-flex md:hidden cursor-pointer transform transition duration-1000 ease-out' />
                         </div>
@@ -335,7 +301,7 @@ const Header = ({dataValue,icon, name }) => {
                         </div>
                     </div>
 
-                    { user || userFacebook ? (
+                    {user || userFacebook ? (
                         <div ref = {refUserImage} className = 'relative w-8 h-8' onClick = {changeUser}>                                                                                                                                                                                    
                             <LazyLoadImage src = {user?.photo || userFacebook?.photo}  alt = 'profile pic' className = {`${borderUser ? 'rounded-full cursor-pointer border  p-[1px] object-cover' : 'rounded-full cursor-pointer border'}`} />
                         </div>

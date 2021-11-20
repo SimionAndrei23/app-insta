@@ -1,5 +1,5 @@
 
-import { CogIcon, TableIcon, PlayIcon, BookmarkIcon, UserGroupIcon, } from '@heroicons/react/outline'
+import { CogIcon, TableIcon, BookmarkIcon, UserGroupIcon, } from '@heroicons/react/outline'
 import { useRouter } from 'next/router'
 import { useContext } from 'react';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -14,7 +14,7 @@ const ProfileStats = ( {postLine, postSaved,tagged} ) => {
 
     return (
         <div className = 'flex flex-col pt-2   max-w-4xl mx-auto w-full'>
-              <div className = 'flex items-center justify-evenly md:items-center md:justify-start  md:gap-20 gap-5 py-5 px-3  md:ml-20 pb-12'>
+                <div className = 'flex items-center justify-evenly md:items-center md:justify-start  md:gap-20 gap-5 py-5 px-3  md:ml-20 pb-12'>
                   <div className = 'relative w-16 h-16 md:w-20 md:h-20'>
                       <img className = 'absolute w-full h-full rounded-full object-cover cursor-pointer' src = {user?.photo || userFacebook?.photo} alt = 'userImage' />
                       <span className = 'md:hidden absolute -bottom-8 -left-2 w-24 text-sm font-semibold'> {user?.name || userFacebook?.name} </span>
@@ -48,7 +48,7 @@ const ProfileStats = ( {postLine, postSaved,tagged} ) => {
                           <span className = 'font-semibold text-lg'> {user?.name} </span>
                       </div>
                   </div>
-              </div>
+                </div>
               <div className = 'w-full h-20 flex md:hidden items-center justify-between px-12 border-t-2 border-gray-200 border-opacity-40'>
                     <div className = 'flex flex-col items-center'>
                         <span className = 'font-semibold'> 21 </span>

@@ -10,17 +10,25 @@ import ModalHorizontal from '../components/ModalHorizontal'
 export default function Home() {
 
   const { modalOne, modalHorizontal } = useContext(Context)
-
+  const [percentageWidth, setPercentageWidth] = useState(0)
   const [width, setWidth]   = useState(null);
   const [height, setHeight] = useState(null);
-  console.log(height)
   const parentRef = useRef(null)
   const [loadingConfetti, setLoadingConfetti] = useState(false)
 
-  console.log(loadingConfetti)
+  const animateProgressBar = () => {
+    let scrollDistance = -parentRef.current?.getBoundingClientRect().top
+    let progressWidth = (scrollDistance / (parentRef.current?.getBoundingClientRect().height - document.documentElement.clientHeight)) * 100;
+    let valueFixed = Math.floor(progressWidth)
+    setPercentageWidth(valueFixed)
+  }
 
   useEffect(() => {
-    setHeight(parentRef.current.clientHeight)
+    window.addEventListener('scroll', animateProgressBar)
+  },[])
+
+  useEffect(() => {
+    setHeight(parentRef.current.innerHeight)
     setWidth(parentRef.current.clientWidth)
   },[width,height])
   
@@ -35,23 +43,6 @@ export default function Home() {
       }
     }
   },[loadingConfetti])
-
-  const [percentageWidth, setPercentageWidth] = useState(0)
-
-  console.log(percentageWidth)
-
-  const animateProgressBar = () => {
-    let scrollDistance = -parentRef.current?.getBoundingClientRect().top
-    let progressWidth = (scrollDistance / (parentRef.current?.getBoundingClientRect().height - document.documentElement.clientHeight)) * 100;
-    let valueFixed = Math.floor(progressWidth)
-    setPercentageWidth(valueFixed)
-  }
-
-  useEffect(() => {
-    window.addEventListener('scroll', animateProgressBar)
-  },[])
-
-
 
   return (
     <div ref = {parentRef}  className='min-h-screen w-full bg-gradient-to-r from-pink-100 to-white'>
@@ -95,17 +86,3 @@ export default function Home() {
     </div>
   )
 }
-
-/*export async function getServerSideProps(context) {
-
-  const session = await getSession(context);
-
-  return {
-
-    props: {
-      
-      session
-
-    }
-  }
-}*/

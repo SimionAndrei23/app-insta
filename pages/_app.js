@@ -26,19 +26,14 @@ Router.events.on('routeChangeError', progressBar.finish)
 
 function MyApp({ Component, ...pageProps }) {
 
-
 const [modalOne, setModalOne] = useState(false)
-
 const [modalHorizontal, setModalHorizontal] = useState(false)
-
-
 const [user, setUser] = useState('')
-
 const [userFacebook, setUserFacebook] = useState('')
-
 let usernameModified = Object.assign({}, userFacebook)
-
 let usernameFacebook = usernameModified?.name?.split(' ').join('').toLocaleLowerCase()
+let nameModified = Object.assign({}, user)
+let username = nameModified?.name?.split(' ').join('').toLocaleLowerCase()
 
 const handleFacebook = (data) => {
     if(data) {
@@ -49,7 +44,7 @@ const handleFacebook = (data) => {
         uid: data.profile.id
       })
       if(typeof window !== 'undefined' && window.localStorage) {
-        localStorage.setItem('user', JSON.stringify(userFacebook))
+        localStorage.setItem('userFacebook', JSON.stringify(userFacebook))
       }
       
     }
@@ -57,12 +52,25 @@ const handleFacebook = (data) => {
       setUserFacebook(null)
       router.push('/login')
     }
-  }
+}
 
-let nameModified = Object.assign({}, user)
 
-let username = nameModified?.name?.split(' ').join('').toLocaleLowerCase()
+const signInUser =  () => {
 
+  signInWithPopup(auth,provider)
+
+}
+
+const signOutUser = () => {
+
+  signOut(auth)
+
+  setUserFacebook(null)
+
+  router.push('/login')
+
+  localStorage.clear()
+}
 
 useEffect(() => {
   return onAuthStateChanged(auth, (user) => {
@@ -83,23 +91,6 @@ useEffect(() => {
         }
   })
 },[])
-
-const signInUser =  () => {
-
-  signInWithPopup(auth,provider)
-
-}
-
-const signOutUser = () => {
-
-  signOut(auth)
-
-  setUserFacebook(null)
-
-  router.push('/login')
-
-  localStorage.clear()
-}
 
 
   return (

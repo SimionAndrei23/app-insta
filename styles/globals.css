@@ -71,4 +71,20 @@
     .scroll-snap-y {
       scroll-snap-type: y;
     }
+}
+
+@font-face {
+    font-family: "EBGaramond";
+    src: url("/public/fonts/Lora-Italic-VariableFont_wght.ttf");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "EBGaramond";
+    src: url("/public/fonts/Lora-VariableFont_wght.ttf");
+    font-style: medium;
+    font-weight: 500;
+    font-display: swap;
   }

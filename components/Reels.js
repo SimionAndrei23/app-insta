@@ -12,17 +12,13 @@ import { db } from "../firebase"
 
 import { Context } from "../Context"
 
-const Reels = ( {setReelsModal,id,avatar,comments, likes,video,name,description,song} ) => {
+const Reels = ( {setReelsModal,id,avatar,comments,video,name,description,song} ) => {
 
 
     const { user, userFacebook } = useContext(Context)
-
     const [hasLiked, setHasLiked] = useState(false)
-
     const [likesHeart, setLikesHeart] = useState([])
-
     const [isPlayingReels, setIsPlayingReels] = useState(false)
-
     const reelsRef = useRef(null)
 
     const videoReels = () => {

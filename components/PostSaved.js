@@ -1,4 +1,4 @@
-import { collection, onSnapshot, query, where } from "@firebase/firestore";
+import { collection, onSnapshot, orderBy, query, where } from "@firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import Tilt from 'react-tilt'
@@ -9,24 +9,21 @@ import { Context } from "../Context";
 const PostSaved = ( {noTilt,id} ) => {
 
     const { user, userFacebook } = useContext(Context)
-
     const [savedPosts, setSavedPosts] = useState([])
-
-    console.log(savedPosts);
 
     useEffect(() => {
 
-        onSnapshot(query(collection(db, 'posts', id, 'savedPosts'), where('userID', '==', user?.uid || userFacebook?.uid)), (snapshot) => {
+        onSnapshot(query(collection(db, 'posts', id, 'savedPosts'), where('userID', '==', user?.uid || userFacebook?.uid),orderBy('timestamp', 'desc')), (snapshot) => {
             setSavedPosts(snapshot.docs);
         })
 
     },[db,id])
     
     return (
-        <>
+        <div>
             {savedPosts.map((savedPost, index) => (
-                   <div>
-                       <div className = 'hidden md:flex'>
+                <div key = {index}>
+                    <div className = 'hidden md:flex'>
                         {
                             noTilt ? (                            
                                 <div className = 'relative  md:w-72 md:h-80 cursor-pointer'>
@@ -42,14 +39,14 @@ const PostSaved = ( {noTilt,id} ) => {
                         }
                     </div>
 
-                       <div className = 'flex md:hidden'>
-                            <div className = 'relative w-36 h-36 cursor-pointer'>
-                                <LazyLoadImage effect = 'opacity' src = {savedPost.data().postImage} atl = '' className = 'absolute top-0 left-0  z-10 w-full h-full  object-cover rounded-sm shadow-xl' />
-                            </div>
+                    <div className = 'flex md:hidden'>
+                        <div className = 'relative w-36 h-36 cursor-pointer'>
+                            <LazyLoadImage effect = 'opacity' src = {savedPost.data().postImage} atl = '' className = 'absolute top-0 left-0  z-10 w-full h-full  object-cover rounded-sm shadow-xl' />
                         </div>
-                   </div>      
+                    </div>
+                </div>      
             ))}
-        </>
+        </div>
     )
 }
 
